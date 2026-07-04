@@ -1,12 +1,7 @@
 <section class="featured-collection">
   <div class="page-width">
     <div class="featured-collection__header">
-      {% if section.settings.heading != blank %}
-        <h2 class="featured-collection__heading">{{ section.settings.heading }}</h2>
-      {% endif %}
-      {% if section.settings.description != blank %}
-        <p class="featured-collection__description">{{ section.settings.description }}</p>
-      {% endif %}
+      {% render 'section-header', heading: section.settings.heading, description: section.settings.description %}
     </div>
 
     <div class="featured-collection__products">
