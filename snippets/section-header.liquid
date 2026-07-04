@@ -1,0 +1,34 @@
+{% if heading != blank or description != blank %}
+  <div class="section-header">
+    {% if heading != blank %}
+      <h2 class="section-header__title">
+        {{ heading }}
+      </h2>
+    {% endif %}
+
+    {% if description != blank %}
+      <div class="section-header__description">
+        {{ description }}
+      </div>
+    {% endif %}
+  </div>
+{% endif %}
+{% stylesheet %}
+  .section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .section-header__title {
+    margin: 0;
+    font-size: 2.25rem;
+    font-weight: 600;
+  }
+
+  .section-header__description {
+    max-width: 42rem;
+    margin: 1rem auto 0;
+    color: #6b7280;
+    line-height: 1.6;
+  }
+{% endstylesheet %}

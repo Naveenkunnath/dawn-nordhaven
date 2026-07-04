@@ -1,8 +1,6 @@
-<section class="store-features">
+<section class="store-features text-align-center">
   <div class="page-width">
-    {% if section.settings.heading != blank %}
-      <h2 class="store-features__heading">{{ section.settings.heading }}</h2>
-    {% endif %}
+    {% render 'section-header', heading: section.settings.heading, description: section.settings.description %}
     <div class="store-features__grid">
       {% for block in section.blocks %}
         <div class="store-feature position-relative" {{ block.shopify_attributes }}>
@@ -68,7 +66,9 @@
     z-index: 1;
     display: block !important;
   }
-
+  .text-align-center {
+    text-align: center;
+  }
   @media screen and (max-width: 989px) {
     .store-features__grid {
       grid-template-columns: repeat(2, 1fr);
@@ -91,6 +91,11 @@
       "id": "heading",
       "label": "Section Heading",
       "default": "Why Shop With Us"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Section Description"
     }
   ],
   "blocks": [
