@@ -1,0 +1,42 @@
+<a href="{{ collection.url }}" class="category-card" {{ block.shopify_attributes }}>
+  <div class="category-card__image">
+    {% if collection.featured_image != blank %}
+      {{
+        collection.featured_image
+        | image_url: width: 800
+        | image_tag: loading: 'lazy', class: 'category-card__image-img'
+      }}
+    {% endif %}
+    {% if collection.title != blank %}
+      <div class="category-card__content">
+        <h3 class="category-card__title">
+          {{ collection.title }}
+        </h3>
+      </div>
+    {% endif %}
+  </div>
+</a>
+{% stylesheet %}
+  .category-card {
+    display: block;
+    position: relative;
+  }
+  .category-card__image-img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .category-card__content {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: grid;
+    background: rgba(0, 0, 0, 0.4);
+  }
+  .category-card__title {
+    margin: auto;
+    font-size: 2.5rem;
+    color: #ffffff;
+  }
+{% endstylesheet %}
