@@ -1,0 +1,97 @@
+<section class="testimonials">
+  <div class="page-width">
+    {% render 'section-header', heading: section.settings.heading, description: section.settings.description %}
+    <div class="testimonials__grid">
+      {% for block in section.blocks %}
+        {% render 'testimonial-card', block: block %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% stylesheet %}
+  .testimonials {
+    padding: 5rem 0;
+  }
+
+  .testimonials__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+
+  @media screen and (max-width: 990px) {
+    .testimonials__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .testimonials__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Testimonials",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "What our customer says..."
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "We let our products speaks for us not us!"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "testimonials",
+      "name": "Testimonials",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Customer Image"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Customer Name"
+        },
+        {
+          "type": "text",
+          "id": "location",
+          "label": "Customer Location"
+        },
+        {
+          "type": "textarea",
+          "id": "review",
+          "label": "Customer Review"
+        },
+        {
+          "type": "range",
+          "id": "rating",
+          "label": "Customer Rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5
+        }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "Testimonials"
+    }
+  ]
+}
+{% endschema %}
