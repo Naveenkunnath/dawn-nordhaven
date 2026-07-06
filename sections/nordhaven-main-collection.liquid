@@ -1,0 +1,203 @@
+<section class="collection">
+  <div class="page-width">
+    <header class="collection__header">
+      <h1 class="collection__title">
+        {{ collection.title }}
+      </h1>
+
+      {% if collection.description != blank %}
+        <div class="collection__description">
+          {{ collection.description }}
+        </div>
+      {% endif %}
+    </header>
+    <div class="collection__controls">
+      <p class="collection__count">{{ collection.products_count }} Products</p>
+
+      {% assign sort_by = collection.sort_by | default: collection.default_sort_by %}
+
+      <form class="collection__sort">
+        <label
+          class="collection__sort-label"
+          for="SortBy"
+        >
+          Sort by
+        </label>
+
+        <select
+          id="SortBy"
+          name="sort_by"
+          class="collection__sort-select"
+          onchange="this.form.submit()"
+        >
+          {% for option in collection.sort_options %}
+            <option
+              value="{{ option.value }}"
+              {% if option.value == sort_by %}
+                selected="selected"
+              {% endif %}
+            >
+              {{ option.name }}
+            </option>
+          {% endfor %}
+        </select>
+      </form>
+    </div>
+
+    <div class="collection__products">
+      {% if collection.products_count > 0 %}
+        {% paginate collection.products by 4 %}
+          <div class="collection__grid">
+            {% for product in collection.products %}
+              {% render 'card-product-nordhaven', product: product %}
+            {% endfor %}
+          </div>
+          <div class="pagination">{{ paginate | default_pagination }}</div>
+        {% endpaginate %}
+      {% else %}
+        <div class="collection__empty">
+          <h2>No products found</h2>
+
+          <p>Products will appear here once they have been added to this collection.</p>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+{% stylesheet %}
+  .collection {
+    padding: 4rem 0 5rem;
+  }
+
+  .collection__header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .collection__title {
+    margin: 0;
+  }
+
+  .collection__description {
+    max-width: 700px;
+    margin: 1rem auto 0;
+  }
+
+  .collection__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+  }
+  .collection__controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+
+    margin-bottom: 3rem;
+  }
+
+  .collection__count {
+    margin: 0;
+    font-size: 0.95rem;
+    color: #6b7280;
+  }
+
+  .collection__sort {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .collection__sort-label {
+    font-size: 0.95rem;
+    color: #6b7280;
+  }
+
+  .collection__sort-select {
+    min-width: 220px;
+
+    padding: 0.75rem 2.75rem 0.75rem 1rem;
+
+    font-size: 0.95rem;
+    font-family: inherit;
+
+    color: #222;
+
+    border: 1px solid #d8d8d8;
+    border-radius: 6px;
+
+    background-color: #fff;
+
+    cursor: pointer;
+
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    transition: border-color 0.25s ease;
+  }
+
+  .collection__sort-select:hover {
+    border-color: #999;
+  }
+
+  .collection__sort-select:focus {
+    outline: none;
+    border-color: #222;
+  }
+  .collection__sort {
+    position: relative;
+  }
+
+  .collection__sort::after {
+    content: '';
+
+    position: absolute;
+
+    right: 1rem;
+    top: 50%;
+
+    width: 8px;
+    height: 8px;
+
+    border-right: 2px solid #444;
+    border-bottom: 2px solid #444;
+
+    transform: translateY(-70%) rotate(45deg);
+
+    pointer-events: none;
+  }
+  .collection .pagination {
+    margin-top: 4rem;
+    text-align: center;
+  }
+  .collection .pagination a {
+    color: #000000;
+    margin-right: 1rem;
+  }
+
+  @media (max-width: 990px) {
+    .collection__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 749px) {
+    .collection__grid {
+      grid-template-columns: 1fr;
+    }
+    .collection__controls {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .collection__sort {
+      width: 100%;
+    }
+
+    .collection__sort-select {
+      width: 100%;
+    }
+  }
+{% endstylesheet %}
