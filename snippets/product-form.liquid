@@ -1,5 +1,5 @@
 {% assign current_variant = product.selected_or_first_available_variant %}
-{% form 'product', product %}
+{% form 'product', product, id: 'ProductForm' %}
   <input type="hidden" id="VariantId" name="id" value="{{ current_variant.id }}">
   {% unless product.has_only_default_variant %}
     <div class="product__variants">
