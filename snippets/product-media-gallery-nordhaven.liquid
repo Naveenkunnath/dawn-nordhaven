@@ -1,0 +1,72 @@
+{% assign current_variant = product.selected_or_first_available_variant %}
+<div class="product-media">
+  <div class="product-media__main">
+    {% if current_variant.featured_image %}
+      {{
+        current_variant.featured_image
+        | image_url: width: 600
+        | image_tag:
+          class: 'product-media__image',
+          id: 'ProductMainImage',
+          loading: 'eager',
+          alt: current_variant.featured_image.alt
+      }}
+    {% endif %}
+  </div>
+  <div class="product-media__thumbnails">
+    {% comment %}
+      <script>
+        console.log({{ product | json }});
+      </script>
+    {% endcomment %}
+    {% for media in product.media %}
+      {% if media.media_type == 'image' %}
+        <button
+          class="product-media__thumbnail {% if current_variant.featured_media.id == media.id %}is-active{% endif %}"
+          type="button"
+          data-media-id="{{ media.id }}"
+          data-image-src="{{ media | image_url: width: 1400 }}"
+          data-image-alt="{{ media.alt }}"
+        >
+          {{
+            media
+            | image_url: width: 150
+            | image_tag: loading: 'lazy', alt: media.alt, class: 'product-media__thumbnail-image'
+          }}
+        </button>
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>
+{% stylesheet %}
+  .product-media__thumbnails {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+  }
+
+  .product-media__thumbnail {
+    border: 1px solid #ddd;
+    padding: 0;
+    cursor: pointer;
+    background: none;
+  }
+
+  .product-media__thumbnail-image {
+    display: block;
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+  }
+
+  .product-media__thumbnail.is-active {
+    border: 2px solid #111;
+  }
+  .product-media__image {
+    transition: opacity 0.25s ease;
+  }
+
+  .product-media__image.is-loading {
+    opacity: 0;
+  }
+{% endstylesheet %}

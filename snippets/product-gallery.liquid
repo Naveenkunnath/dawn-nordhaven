@@ -1,0 +1,8 @@
+{% assign current_variant = product.selected_or_first_available_variant %}
+{% if current_variant.featured_image %}
+  {{
+    current_variant.featured_image
+    | image_url: width: 1400
+    | image_tag: class: 'product__image', id: 'VariantImage', loading: 'eager', alt: current_variant.featured_image.alt
+  }}
+{% endif %}

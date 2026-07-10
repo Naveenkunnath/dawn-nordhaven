@@ -1,0 +1,139 @@
+{% assign current_variant = product.selected_or_first_available_variant %}
+<section class="product">
+  <div class="page-width">
+    <div class="product__layout">
+      <div class="product__media-container">
+        {% comment %} Single image with swapping  {% render 'product-gallery', product: product %} {% endcomment %}
+        {% render 'product-media-gallery-nordhaven', product: product, current_variant: current_variant %}
+      </div>
+
+      <div class="product__details">
+        {% render 'product-info', product: product %}
+        {% render 'product-form', product: product %}
+      </div>
+    </div>
+  </div>
+</section>
+{% stylesheet %}
+  .product {
+    padding: 4rem 0;
+  }
+
+  .product__layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .product__image {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .product__title {
+    margin: 0 0 0.75rem;
+  }
+
+  .product__vendor {
+    margin-bottom: 1rem;
+    color: #6b7280;
+  }
+
+  .product__price {
+    margin-bottom: 2rem;
+    font-size: 1.75rem;
+    font-weight: 600;
+  }
+
+  .product__description {
+    line-height: 1.8;
+  }
+  .product__variants {
+    margin: 2rem 0;
+  }
+
+  .product__variants label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+  }
+
+  .product__variants select {
+    width: 100%;
+    max-width: 320px;
+    padding: 0.85rem 1rem;
+    font: inherit;
+    border: 1px solid #d8d8d8;
+    background: #fff;
+  }
+
+  .product__price-current {
+    font-size: 1.75rem;
+    font-weight: 600;
+  }
+
+  .product__price-compare {
+    margin-left: 0.75rem;
+    color: #888;
+    text-decoration: line-through;
+  }
+  .product-form {
+    margin-top: 2.5rem;
+  }
+
+  .product-form__quantity {
+    margin: 1.5rem 0;
+  }
+
+  .product-form__quantity label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+  }
+
+  .product-form__quantity input {
+    width: 90px;
+
+    padding: 0.75rem;
+
+    font: inherit;
+
+    border: 1px solid #d8d8d8;
+  }
+
+  .product-form__submit {
+    width: 100%;
+
+    padding: 1rem;
+
+    border: none;
+
+    background: #222;
+
+    color: white;
+
+    cursor: pointer;
+
+    transition: opacity 0.25s ease;
+  }
+
+  .product-form__submit:hover {
+    opacity: 0.9;
+  }
+
+  .product-form__submit:disabled {
+    opacity: 0.45;
+
+    cursor: not-allowed;
+  }
+
+  @media (max-width: 990px) {
+    .product__layout {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+  }
+{% endstylesheet %}
+<script src="{{ 'nordhaven-product.js' | asset_url }}" defer></script>
