@@ -1,0 +1,53 @@
+{% assign current_variant = product.selected_or_first_available_variant %}
+{% form 'product', product %}
+  <input type="hidden" id="VariantId" name="id" value="{{ current_variant.id }}">
+  {% unless product.has_only_default_variant %}
+    <div class="product__variants">
+      <label for="VariantSelect">{{ product.options.first }}</label>
+      <select id="VariantSelect">
+        {% for variant in product.variants %}
+          <option
+            value="{{ variant.id }}"
+            {% if variant == current_variant %}
+              selected
+            {% endif %}
+          >
+            {{ variant.title }}
+          </option>
+        {% endfor %}
+      </select>
+    </div>
+  {% endunless %}
+  <div class="product-form__quantity">
+    <label for="Quantity"> Quantity </label>
+    <input
+      id="Quantity"
+      type="number"
+      name="quantity"
+
+      value="1"
+
+      min="1"
+    >
+  </div>
+  <button
+    id="AddToCartButton"
+    type="submit"
+
+    class="product-form__submit"
+
+    {% unless current_variant.available %}
+      disabled
+    {% endunless %}
+  >
+    {% if current_variant.available %}
+      Add to Cart
+
+    {% else %}
+      Sold Out
+    {% endif %}
+  </button>
+  <script type="application/json" id="ProductVariants">
+    {{ product.variants | json }}
+  </script>
+{% endform %}
