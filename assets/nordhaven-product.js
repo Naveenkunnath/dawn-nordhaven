@@ -135,8 +135,10 @@ async function handleAddToCart(event) {
       throw new Error("Failed to add product to cart");
     }
     const data = await response.json();
-    console.log(data);
+    //console.log(data);
     await updateCartCount();
+    await renderCartDrawer();
+    openCartDrawer();
     addCartButton.disabled = false;
     addCartButton.textContent = "Added ✓";
     setTimeout(() => {
@@ -155,7 +157,7 @@ async function updateCartCount() {
       throw new Error("Failed to fetch cart");
     }
     const cart = await response.json();
-    console.log(cart);
+    //console.log(cart);
     cartCount.textContent = cart.item_count;
   } catch (error) {
     console.error(error);

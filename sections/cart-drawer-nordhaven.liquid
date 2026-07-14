@@ -1,0 +1,208 @@
+<div id="CartDrawer" class="cart-drawer">
+  <div class="cart-drawer__overlay">&nbsp;</div>
+
+  <aside class="cart-drawer__panel">
+    <header class="cart-drawer__header">
+      <h2>Your Cart</h2>
+
+      <button
+        type="button"
+        id="CartDrawerClose"
+        class="cart-drawer__close"
+        aria-label="Close cart"
+      >
+        ✕
+      </button>
+    </header>
+
+    <div class="cart-drawer__content">
+      {% if cart.item_count == 0 %}
+        <p>Your cart is empty.</p>
+
+      {% else %}
+        <div class="cart-items">
+          {% for item in cart.items %}
+            {% render 'cart-drawer-nordhaven-item', item: item, line: forloop.index %}
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+    {% if cart.item_count > 0 %}
+      <footer class="cart-drawer__footer">
+        <div class="cart-drawer__subtotal">
+          <span>Subtotal</span>
+
+          <span>{{ cart.total_price | money }}</span>
+        </div>
+
+        <a
+          href="/checkout"
+          class="button button--primary"
+        >
+          Checkout
+        </a>
+      </footer>
+    {% endif %}
+  </aside>
+</div>
+{% schema %}
+{
+  "name": "Cart Drawer",
+  "settings": []
+}
+{% endschema %}
+{% stylesheet %}
+  .cart-drawer__panel {
+    width: 420px;
+    max-width: 90vw;
+
+    display: flex;
+    flex-direction: column;
+  }
+
+  .cart-drawer__panel .cart-drawer__content {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 24px;
+  }
+
+  .cart-drawer__panel .cart-items {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .cart-drawer__panel .cart-item {
+    display: grid;
+
+    grid-template-columns: 100px 1fr;
+
+    gap: 16px;
+
+    padding-bottom: 20px;
+
+    border-bottom: 1px solid #eee;
+  }
+  .cart-drawer__panel .cart-item__image {
+    max-width: 80%;
+  }
+  .cart-drawer__panel .cart-item__image-img {
+    width: 100%;
+
+    height: auto;
+
+    display: block;
+
+    border-radius: 6px;
+  }
+
+  .cart-drawer__panel .cart-item__details h3 {
+    margin: 0 0 8px;
+
+    font-size: 16px;
+  }
+
+  .cart-drawer__panel .cart-item__details p {
+    margin: 4px 0;
+  }
+  .cart-drawer__panel .cart-item__quantity {
+    margin-top: 12px;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    border: 1px solid #ddd;
+  }
+
+  .cart-drawer__panel .cart-item__quantity button {
+    width: 36px;
+
+    height: 36px;
+
+    border: 0;
+
+    background: white;
+
+    cursor: pointer;
+  }
+
+  .cart-drawer__panel .cart-item__quantity span {
+    width: 40px;
+
+    text-align: center;
+  }
+  .cart-drawer__footer {
+    padding: 24px;
+
+    border-top: 1px solid #e5e5e5;
+
+    background: #fff;
+  }
+  .cart-drawer__footer .button {
+    width: 100%;
+  }
+  .cart-drawer__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 20px 24px;
+
+    border-bottom: 1px solid #e5e5e5;
+  }
+
+  .cart-drawer__header h2 {
+    margin: 0;
+    font-size: 1.8rem;
+    font-weight: 600;
+  }
+  .cart-drawer__close {
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border: none;
+    background: transparent;
+
+    font-size: 2.2rem;
+    line-height: 1;
+
+    cursor: pointer;
+
+    border-radius: 50%;
+
+    transition: background-color 0.25s ease, transform 0.25s ease;
+  }
+  .cart-drawer__close:hover {
+    background-color: #f5f5f5;
+  }
+  .cart-drawer__close:active {
+    transform: scale(0.95);
+  }
+  .cart-item__remove {
+    margin-top: 12px;
+
+    padding: 0;
+
+    border: none;
+
+    background: none;
+
+    cursor: pointer;
+
+    font-size: 14px;
+
+    text-decoration: underline;
+
+    color: #666;
+  }
+
+  .cart-item__remove:hover {
+    color: #000;
+  }
+{% endstylesheet %}

@@ -36,17 +36,21 @@
       customElements.define('collection-component', StandardEvents.createViewEventElement());
       customElements.define(
         'product-component',
-        StandardEvents.createViewEventElement(HTMLElement, { defaultTrigger: 'intersect' }),
+        StandardEvents.createViewEventElement(HTMLElement, { defaultTrigger: 'intersect' })
       );
 
-      document.addEventListener('DOMContentLoaded', () => {
-        const template = document.querySelector('main[data-template]')?.dataset.template || '';
-        document.dispatchEvent(
-          new StandardEvents.PageViewEvent({
-            page: { template, title: document.title, url: window.location.href },
-          })
-        );
-      }, { once: true });
+      document.addEventListener(
+        'DOMContentLoaded',
+        () => {
+          const template = document.querySelector('main[data-template]')?.dataset.template || '';
+          document.dispatchEvent(
+            new StandardEvents.PageViewEvent({
+              page: { template, title: document.title, url: window.location.href },
+            })
+          );
+        },
+        { once: true }
+      );
     </script>
 
     <script src="{{ 'constants.js' | asset_url }}" defer="defer"></script>
@@ -319,6 +323,7 @@
         document.documentElement.classList.add('shopify-design-mode');
       }
     </script>
+    {{ 'cart-drawer-nordhaven.css' | asset_url | stylesheet_tag }}
   </head>
 
   <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
@@ -401,5 +406,7 @@
     {%- if settings.cart_type == 'drawer' -%}
       <script src="{{ 'cart-drawer.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
+    {% section 'cart-drawer-nordhaven' %}
+    <script src="{{ 'cart-drawer-nordhaven.js' | asset_url }}" defer></script>
   </body>
 </html>

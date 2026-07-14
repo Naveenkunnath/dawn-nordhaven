@@ -1,0 +1,42 @@
+<div class="cart-item">
+  <div class="cart-item__image">
+    {{ item.image | image_url: width: 180 | image_tag: class: 'cart-item__image-img' }}
+  </div>
+
+  <div class="cart-item__details">
+    <h3>{{ item.product.title }}</h3>
+
+    {% unless item.product.has_only_default_variant %}
+      <p>{{ item.variant.title }}</p>
+    {% endunless %}
+
+    <p>{{ item.final_price | money }}</p>
+
+    <div class="cart-item__quantity">
+      <button
+        type="button"
+        class="cart-item__decrease"
+        data-line="{{ line }}"
+      >
+        -
+      </button>
+
+      <span>{{ item.quantity }}</span>
+
+      <button
+        type="button"
+        class="cart-item__increase"
+        data-line="{{ line }}"
+      >
+        +
+      </button>
+    </div>
+    <button
+      type="button"
+      class="cart-item__remove"
+      data-line="{{ line }}"
+    >
+      Remove
+    </button>
+  </div>
+</div>
